@@ -106,6 +106,26 @@ void insereNaoCheio(struct BTreeNo *no, int chave){
         insereNaoCheio(no->filho[i], chave);
     }
 }
+void traverse(struct BTreeNo *no) {
+    if (no == NULL) return;
+
+    int i;
+    for (i = 0; i < no->qtd_chaves; i++) {
+        // Primeiro percorre o filho antes da chave
+        if (!no->eh_folha) {
+            traverse(no->filho[i]);
+        }
+
+        // Imprime a chave
+        printf("%d ", no->chaves[i]);
+    }
+
+    // Após a última chave, percorre o último filho
+    if (!no->eh_folha) {
+        traverse(no->filho[i]);
+    }
+}
+
 int main()
 {
     struct BTreeNo *raiz = NULL;
@@ -117,9 +137,9 @@ int main()
     insere(&raiz, 12);
     insere(&raiz, 30);
 
-//    printf("In-order traversal of the B-tree: ");
-//    traverse(raiz);
-//    printf("\n");
+    printf("In-order traversal of the B-tree: ");
+    traverse(raiz);
+    printf("\n");
 
     return 0;
 }
