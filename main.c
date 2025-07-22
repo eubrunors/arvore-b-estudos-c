@@ -78,15 +78,23 @@ void insereNaoCheio(**no, chave){
         no->chaves[i+1]=chave;
         no->qtd_chaves++;
     }
-    else
-    {
-        while(i>=0 && no->chaves[i]>chave){
+    else {
+        // Descobrir qual filho descer
+        while (i >= 0 && no->chaves[i] > chave) {
             i--;
         }
-        i++;
-        if(no->filho[i]->qtd_chaves==ORDEM-1){
-            splitFilho
+        i++;  // filho[i] é o destino
+
+        if (no->filho[i]->qtd_chaves == ORDEM - 1) {
+            splitFilho(no, i);
+
+            if (chave > no->chaves[i]) {
+                i++;
+            }
         }
+
+        // Desce no filho correto (agora garantidamente não cheio)
+        insereNaoCheio(no->filho[i], chave);
     }
 }
 int main()
