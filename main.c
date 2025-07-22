@@ -37,7 +37,7 @@ void insere(**raiz, chave){
             *raiz = novaRaiz;
         }
         //INSERIR EM NO NAO LOTADO
-        insereNaoCheio(*raiz,cahve);
+        insereNaoCheio(*raiz,chave);
     }
 }
 void splitFilho(struct BTreeNo *pai,int indice){
@@ -68,7 +68,11 @@ void splitFilho(struct BTreeNo *pai,int indice){
 
     pai->qtd_chaves++;
 }
+void insereNaoCheio(**raiz, chave){
 
+
+
+}
 int main()
 {
     struct BTreeNode *raiz = NULL;
