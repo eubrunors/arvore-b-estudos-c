@@ -40,31 +40,40 @@ void insere(**raiz, chave){
         insereNaoCheio(*raiz,chave);
     }
 }
-void splitFilho(struct BTreeNo *pai,int indice){
+void splitFilho(struct BTreeNo *pai, int indice) {
     struct BTreeNo *filho = pai->filho[indice];
     struct BTreeNo *novoNo = criaNo(filho->eh_folha);
 
-    int meio=ORDEM/2;
+    int meio = ORDEM / 2;  // Ex: ORDEM = 4 → meio = 2
 
-    novoNo->qtd_chaves = ORDEM/2-1;//1 CHAVE PRO NOVATO
+    // novoNo recebe as chaves da metade direita do filho
+    novoNo->qtd_chaves = ORDEM / 2 - 1;  // 1 chave para novoNo
 
-    for(int i=0, i<ORDEM/2-1; i++){
-        novoNo->chaves[i]=filho->chaves[i+ORDEM/2];
+    for (int j = 0; j < novoNo->qtd_chaves; j++) {
+        novoNo->chaves[j] = filho->chaves[j + meio];
     }
-    if(!filho->is_leaf){
-        //SE FILHO NAO FOR FOLHA
+
+    // se não for folha, copia os filhos correspondentes
+    if (!filho->eh_folha) {
         for (int j = 0; j < ORDEM / 2; j++) {
             novoNo->filho[j] = filho->filho[j + meio];
         }
     }
-    // Reduz a quantidade de chaves do n� original
-    filho->qtd_chaves=ORDEM/2-1;
 
+    // Reduz a quantidade de chaves do nó original
+    filho->qtd_chaves = ORDEM / 2 - 1;
 
-    pai->filho[indice+1]=novoNo;
+    // Move os ponteiros de filhos no pai para abrir espaço para o novo filho
+    for (int j = pai->qtd_chaves; j >= indice + 1; j--) {
+        pai->filho[j + 1] = pai->filho[j];
+    }
+    pai->filho[indice + 1] = novoNo;
 
-
-    pai->chaves[indice]=filho->chaves[meio-1];
+    // Move as chaves no pai para abrir espaço para a chave do meio
+    for (int j = pai->qtd_chaves - 1; j >= indice; j--) {
+        pai->chaves[j + 1] = pai->chaves[j];
+    }
+    pai->chaves[indice] = filho->chaves[meio - 1];  // chave do meio sobe
 
     pai->qtd_chaves++;
 }
@@ -83,7 +92,7 @@ void insereNaoCheio(**no, chave){
         while (i >= 0 && no->chaves[i] > chave) {
             i--;
         }
-        i++;  // filho[i] � o destino
+        i++;  // filho[i] é o destino
 
         if (no->filho[i]->qtd_chaves == ORDEM - 1) {
             splitFilho(no, i);
@@ -93,20 +102,20 @@ void insereNaoCheio(**no, chave){
             }
         }
 
-        // Desce no filho correto (agora garantidamente n�o cheio)
+        // Desce no filho correto (agora garantidamente não cheio)
         insereNaoCheio(no->filho[i], chave);
     }
 }
 int main()
 {
-    struct BTreeNode *raiz = NULL;
+    struct BTreeNo *raiz = NULL;
 
-    insert(&raiz, 10);
-    insert(&raiz, 20);
-    insert(&raiz, 5);
-    insert(&raiz, 6);
-    insert(&raiz, 12);
-    insert(&raiz, 30);
+    insere(&raiz, 10);
+    insere(&raiz, 20);
+    insere(&raiz, 5);
+    insere(&raiz, 6);
+    insere(&raiz, 12);
+    insere(&raiz, 30);
 
 //    printf("In-order traversal of the B-tree: ");
 //    traverse(raiz);
