@@ -26,29 +26,26 @@ void insere(**raiz, chave){
     if(no==NULL){
         *raiz = criaNo(true);
         (*raiz)->chaves[0] = chave;
-
+        (*raiz)->qtd_chaves = 1;
     }
-
-
 }
-
 
 }
 
 int main()
 {
-    struct BTreeNode *root = NULL;
+    struct BTreeNode *raiz = NULL;
 
-    insert(&root, 10);
-    insert(&root, 20);
-    insert(&root, 5);
-    insert(&root, 6);
-    insert(&root, 12);
-    insert(&root, 30);
+    insert(&raiz, 10);
+    insert(&raiz, 20);
+    insert(&raiz, 5);
+    insert(&raiz, 6);
+    insert(&raiz, 12);
+    insert(&raiz, 30);
 
-    printf("In-order traversal of the B-tree: ");
-    traverse(root);
-    printf("\n");
+//    printf("In-order traversal of the B-tree: ");
+//    traverse(raiz);
+//    printf("\n");
 
     return 0;
 }
