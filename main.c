@@ -78,7 +78,16 @@ void insereNaoCheio(**no, chave){
         no->chaves[i+1]=chave;
         no->qtd_chaves++;
     }
-
+    else
+    {
+        while(i>=0 && no->chaves[i]>chave){
+            i--;
+        }
+        i++;
+        if(no->filho[i]->qtd_chaves==ORDEM-1){
+            splitFilho
+        }
+    }
 }
 int main()
 {
