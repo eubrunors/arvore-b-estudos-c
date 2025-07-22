@@ -21,8 +21,8 @@ struct BTreeNo *criaNo(bool eh_folha)
     }
     return novoNo;
 }
-void insere(**raiz, chave){
-    struct BTreeNo *no = *raiz
+void insere(struct BTreeNo **raiz,int chave){
+    struct BTreeNo *no = *raiz;
     //INSERINDO EM NO RAIZ
     if(no==NULL){
         *raiz = criaNo(true);
@@ -77,8 +77,8 @@ void splitFilho(struct BTreeNo *pai, int indice) {
 
     pai->qtd_chaves++;
 }
-void insereNaoCheio(**no, chave){
-    int i=no->qtd_chaves-1
+void insereNaoCheio(struct BTreeNo *no, int chave){
+    int i = no->qtd_chaves-1;
     if(no->eh_folha){
         while(i>=0 && no->chaves[i] > chave){
             no->chaves[i+1]=no->chaves[i];
