@@ -68,9 +68,16 @@ void splitFilho(struct BTreeNo *pai,int indice){
 
     pai->qtd_chaves++;
 }
-void insereNaoCheio(**raiz, chave){
-
-
+void insereNaoCheio(**no, chave){
+    int i=no->qtd_chaves-1
+    if(no->eh_folha){
+        while(i>=0 && no->chaves[i] > chave){
+            no->chaves[i+1]=no->chaves[i];
+            i--;
+        }
+        no->chaves[i+1]=chave;
+        no->qtd_chaves++;
+    }
 
 }
 int main()
